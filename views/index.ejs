@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1.0">
+    <title>Upload and Visualize XML</title>
+    <link rel="stylesheet" 
+          href="/css/styles.css">    
+    <script src="/js/index.js" 
+            defer></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="key-bar">
+            <% uniqueEntityTypes.forEach(type => { %>
+                <div class="key">
+                    <span style="background-color: <%= entityTypeColorMap[type] %>; 
+                                 color: <%= entityTypeTextColorMap[type] %>;">
+                    </span>
+                <%= type %>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    
+    <div class="magnifier" id="magnifier"></div>
+
+    <div class="word-stats"></div>
+
+    <div class="main-body">
+        <form enctype="multipart/form-data" 
+              action='/upload' 
+              method='post'>
+            <input type="file" 
+                   name="xmlfile" />
+            <input type='submit' 
+                   value='Upload & Visualize!' />
+        </form>
+    
+        <div id="word-container">
+            <% wordsData.forEach(word => { %>
+                <span class="word" 
+                      style="background-color: <%= entityTypeColorMap[word.ent_type_] %>;
+                             color: <%= entityTypeTextColorMap[word.ent_type_] %>;" 
+                      data-i="<%= word.i %><%= '::' %><%= word.idx %>"
+                      data-value="<%= word.value %>"
+                      data-lang="<%= word.lang_ || '' %>"                  
+                      data-pos="<%= word.pos_ || '' %>"
+                      data-dep="<%= word.dep_ || '' %>"
+                      data-ent-type="<%= word.ent_type_ || 'None' %>"                  
+                      data-sentiment="<%= word.sentiment || '0.0' %>"
+                      data-is-oov="<%= word.is_oov === 'True' ? '✓' : '' %>"
+                      data-is-alpha="<%= word.is_alpha === 'True' ? '✓' : '' %>"
+                      data-is-ascii="<%= word.is_ascii === 'True' ? '✓' : '' %>"
+                      data-is-bracket="<%= word.is_bracket === 'True' ? '✓' : '' %>"
+                      data-is-currency="<%= word.is_currency === 'True' ? '✓' : '' %>"
+                      data-is-digit="<%= word.is_digit === 'True' ? '✓' : '' %>"
+                      data-is-left-punct="<%= word.is_left_punct === 'True' ? '✓' : '' %>"
+                      data-is-lower="<%= word.is_lower === 'True' ? '✓' : '' %>"
+                      data-is-punct="<%= word.is_punct === 'True' ? '✓' : '' %>"
+                      data-is-quote="<%= word.is_quote === 'True' ? '✓' : '' %>"
+                      data-is-right-punct="<%= word.is_right_punct === 'True' ? '✓' : '' %>"
+                      data-is-sent-end="<%= word.is_sent_end === 'True' ? '✓' : '' %>"
+                      data-is-sent-start="<%= word.is_sent_start === 'True' ? '✓' : '' %>"
+                      data-is-space="<%= word.is_space === 'True' ? '✓' : '' %>"
+                      data-is-stop="<%= word.is_stop === 'True' ? '✓' : '' %>"
+                      data-is-title="<%= word.is_title === 'True' ? '✓' : '' %>"
+                      data-is-upper="<%= word.is_upper === 'True' ? '✓' : '' %>"
+                      data-like-email="<%= word.like_email === 'True' ? '✓' : '' %>"
+                      data-like-num="<%= word.like_num === 'True' ? '✓' : '' %>"
+                      data-like-url="<%= word.like_url === 'True' ? '✓' : '' %>">
+                    <%= word.value %>
+                </span>
+            <% }) %>
+        </div>
+    </div>
+</body>
+
+</html>
