@@ -1,7 +1,7 @@
-const request = require('supertest');
-const { expect } = require('chai');
-const path = require('path');
-const app = require('../server');
+import request from 'supertest';
+import { expect } from 'chai';
+import path from 'path';
+import app from '../server.js';
 
 describe('POST /upload', function() {
   it('should respond with 200 for a valid upload', function(done) {
