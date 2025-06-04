@@ -51,6 +51,7 @@ app.get('/', (req, res) => {
 	});
 });
 
+
 app.post('/upload', (req, res) => {
     upload.single('xmlfile')(req, res, (err) => {
         if (err instanceof multer.MulterError) {
@@ -111,6 +112,10 @@ app.post('/upload', (req, res) => {
 
 
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-});
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}/`);
+    });
+}
+
+module.exports = app;
