@@ -11,7 +11,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({
+    storage,
+    limits: { fileSize: 1 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        const allowedMime = ['text/xml', 'application/xml'];
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (allowedMime.includes(file.mimetype) && ext === '.xml') {
+            cb(null, true);
+        } else {
+            cb(new Error('Only XML files are allowed'));
+        }
+    }
+});
 
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -39,15 +51,29 @@ app.get('/', (req, res) => {
 	});
 });
 
-app.post('/upload', upload.single('xmlfile'), (req, res) => {
-    const startTime = Date.now();
-    const xmlData = req.file.buffer.toString();
-
-    xml2js.parseString(xmlData, (err, result) => {
-        if (err) {
-            res.status(500).send('Unable to parse XML');
-            return;
+app.post('/upload', (req, res) => {
+    upload.single('xmlfile')(req, res, (err) => {
+        if (err instanceof multer.MulterError) {
+            if (err.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).send('File too large. Maximum size is 1MB.');
+            }
+            return res.status(400).send(err.message);
+        } else if (err) {
+            return res.status(400).send(err.message);
         }
+
+        if (!req.file) {
+            return res.status(400).send('No file uploaded.');
+        }
+
+        const startTime = Date.now();
+        const xmlData = req.file.buffer.toString();
+
+        xml2js.parseString(xmlData, (err2, result) => {
+            if (err2) {
+                res.status(500).send('Unable to parse XML');
+                return;
+            }
 
         const words = result.document.word || [];
         const wordsData = words.map(wordElem => {
@@ -76,8 +102,13 @@ app.post('/upload', upload.single('xmlfile'), (req, res) => {
 
         const endTime = Date.now();
         console.log(`File '${req.file.originalname}' processed in ${endTime-startTime}ms`);
+
+
     });
 });
+
+});
+
 
 
 app.listen(port, () => {
