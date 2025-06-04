@@ -11,7 +11,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({
+    storage,
+    limits: { fileSize: 1 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+        const allowedMime = ['text/xml', 'application/xml'];
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (allowedMime.includes(file.mimetype) && ext === '.xml') {
+            cb(null, true);
+        } else {
+            cb(new Error('Only XML files are allowed'));
+        }
+    }
+});
 
 function getRandomColor() {
     const letters = '0123456789ABCDEF';
@@ -90,7 +102,10 @@ app.post('/upload', (req, res) => {
     });
 });
 
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}/`);
+    });
+}
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-});
+module.exports = app;

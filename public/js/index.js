@@ -90,11 +90,13 @@ document.addEventListener("DOMContentLoaded", function() {
 	document.querySelectorAll(".key span").forEach(span => {        
 	    span.addEventListener('click', function() {
             
-	        let colorInput = document.createElement('input');
-	        colorInput.type = 'color';
-	        colorInput.value = this.style.backgroundColor;
-			
-	        colorInput.addEventListener('input', (event) => {
+                let colorInput = document.createElement('input');
+                colorInput.type = 'color';
+                colorInput.value = this.style.backgroundColor;
+
+                document.body.appendChild(colorInput);
+                colorInput.addEventListener('change', () => colorInput.remove());
+                colorInput.addEventListener('input', (event) => {
                 
 	            let newColor = event.target.value;
 	            let entityType = this.parentElement.textContent.trim();

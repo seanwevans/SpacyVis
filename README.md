@@ -42,7 +42,7 @@ SpacyVis/
 
 3. Run the server:
    ```bash
-   node server.js
+   npm start
    ```
 4. Access the app at:
    ```
@@ -50,7 +50,7 @@ SpacyVis/
    ```
 
 ## Usage
-1. Start the server by running `node server.js`.
+1. Start the server by running `npm start`.
 2. Upload XML files by selecting a file and clicking "Upload & Visualize!".
 3. Hover over words to see detailed attributes in the sidebar.
 4. Click entity color blocks to adjust the color representation.
