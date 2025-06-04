@@ -1,12 +1,19 @@
-const express = require('express');
-const multer = require('multer');
-const xml2js = require('xml2js');
-const path = require('path');
+import express from 'express';
+import multer from 'multer';
+import xml2js from 'xml2js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { getRandomColor, isColorDark } from './utils/color.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/utils', express.static(path.join(__dirname, 'utils')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -24,22 +31,6 @@ const upload = multer({
         }
     }
 });
-
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
-function isColorDark(hex) {
-    const r = parseInt(hex.substring(1, 3), 16);
-    const g = parseInt(hex.substring(3, 5), 16);
-    const b = parseInt(hex.substring(5, 7), 16);
-    return 0.299 * r + 0.587 * g + 0.114 * b < 128;    
-}
 
 
 app.get('/', (req, res) => {
@@ -102,10 +93,10 @@ app.post('/upload', (req, res) => {
     });
 });
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
     app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}/`);
     });
 }
 
-module.exports = app;
+export default app;
