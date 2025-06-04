@@ -40,6 +40,9 @@ app.get('/', (req, res) => {
 });
 
 app.post('/upload', upload.single('xmlfile'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('No file uploaded');
+    }
     const startTime = Date.now();
     const xmlData = req.file.buffer.toString();
 
@@ -80,6 +83,10 @@ app.post('/upload', upload.single('xmlfile'), (req, res) => {
 });
 
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-});
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}/`);
+    });
+}
+
+module.exports = app;
