@@ -3,6 +3,18 @@ import { expect } from 'chai';
 import path from 'path';
 import app from '../server.js';
 
+describe('GET /', function() {
+  it('should render the upload page', function(done) {
+    request(app)
+      .get('/')
+      .expect(200)
+      .expect(res => {
+        expect(res.text).to.match(/Upload and Visualize XML/);
+      })
+      .end(done);
+  });
+});
+
 describe('POST /upload', function() {
   it('should respond with 200 for a valid upload', function(done) {
     request(app)
