@@ -32,7 +32,7 @@ SpacyVis/
 ### Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/spacyvis.git
+   git clone https://github.com/username/spacyvis.git # example repository URL
    cd spacyvis
    ```
 2. Install dependencies:
