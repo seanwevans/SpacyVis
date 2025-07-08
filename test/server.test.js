@@ -29,4 +29,12 @@ describe('POST /upload', function() {
       .expect(400)
       .expect('No file uploaded', done);
   });
+
+  it('should respond with 500 when XML is malformed', function(done) {
+    request(app)
+      .post('/upload')
+      .attach('xmlfile', Buffer.from('<document><word value="hi"></document>'), 'test.xml')
+      .expect(500)
+      .expect('Unable to parse XML', done);
+  });
 });
