@@ -12,6 +12,13 @@ const __dirname = dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Simple logging utility honoring the LOGGING environment variable
+const log = (...args) => {
+    if (process.env.LOGGING !== 'false') {
+        console.log(...args);
+    }
+};
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/utils', express.static(path.join(__dirname, 'utils')));
 app.set('views', path.join(__dirname, 'views'));
@@ -88,14 +95,14 @@ app.post('/upload', (req, res) => {
             });
 
             const endTime = Date.now();
-            console.log(`File '${req.file.originalname}' processed in ${endTime-startTime}ms`);
+            log(`File '${req.file.originalname}' processed in ${endTime - startTime}ms`);
         });
     });
 });
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
     app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}/`);
+        log(`Server running at http://localhost:${port}/`);
     });
 }
 
