@@ -39,6 +39,7 @@ SpacyVis/
    ```bash
    npm install
    ```
+This step installs all required packages, including dev dependencies needed for running tests.
 
 3. Run the server:
    ```bash
@@ -206,6 +207,15 @@ This XML format represents detailed linguistic annotations of tokens in a text, 
 - Attributes that return lists (like `ancestors` or `children`) are serialized as string representations of lists.
 - Boolean attributes are serialized as "True" or "False."
 - Attributes without direct values are left empty (`<method value="ent_kb_id_"></method>`).
+
+## Testing
+Before running the test suite, install all dependencies including dev packages:
+```bash
+npm install
+npm test
+```
+Running `npm install` ensures dev dependencies like Mocha and Chai are available.
+
 
 
 
