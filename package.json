@@ -18,8 +18,8 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "chai": "^5.2.0",
-    "mocha": "^11.5.0",
-    "supertest": "^7.1.1"
+    "chai": "^5.2.1",
+    "mocha": "^11.7.1",
+    "supertest": "^7.1.3"
   }
 }
