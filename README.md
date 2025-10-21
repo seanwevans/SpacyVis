@@ -1,4 +1,5 @@
 # SpacyVis
+<img width="256" alt="look! listen!" src="https://github.com/user-attachments/assets/c38746f5-f50b-4332-b2e2-a0a4e61ff438" />
 
 SpacyVis is a web-based application that visualizes XML-annotated data through entity recognition and interactive highlighting. This project uses Node.js, Express, and EJS templating to provide an interface for uploading and exploring structured data.
 
@@ -9,20 +10,6 @@ SpacyVis is a web-based application that visualizes XML-annotated data through e
 - Interactive word statistics on hover.
 - Adjustable entity color mapping.
 - Magnifier tool to zoom in on words.
-
-## Project Structure
-```
-SpacyVis/
-|-- public/
-|   |-- css/
-|   |   |-- styles.css       # Styling for the interface
-|   |-- js/
-|   |   |-- index.js         # Client-side interactions and dynamic behavior
-|-- views/
-|   |-- index.ejs            # EJS template for rendering the main page
-|-- server.js                # Express server handling routes and uploads
-|-- package.json             # Project metadata and dependencies
-```
 
 ## Installation
 ### Prerequisites
@@ -215,18 +202,3 @@ npm install
 npm test
 ```
 Running `npm install` ensures dev dependencies like Mocha and Chai are available.
-
-
-
-
-## Dependencies
-- Express (^4.18.2)
-- EJS (^3.1.9)
-- Multer (^1.4.5)
-- xml2js (^0.6.2)
-- html2canvas (^1.4.1)
-- seedrandom (^3.0.5)
-
-## License
-This project is licensed under the ISC License.
-
